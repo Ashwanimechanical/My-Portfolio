@@ -6,6 +6,8 @@ import desktop1Image from '../assets/desktop1.png';
 import herosectionImage from '../assets/herosection.png';
 import edulleyImage from '../assets/edulley.png';
 import jagrukjantaImage from '../assets/jagrukjanta.png';
+import healixImage from '../assets/healix.png';
+import outfitImage from '../assets/outfit.png';
 
 const MyWorkContainer = styled.section`
   padding: 2rem 1rem; /* Default padding for mobile */
@@ -126,7 +128,7 @@ const Mywork = () => {
     {
       title: 'Select Ease-web',
       image: herosectionImage, // Use imported image
-      url: 'https://select-ease.vercel.app', // Ensure full URL
+      url: 'https://www.selectease.world/', // Ensure full URL
     },
     {
       title: 'Edulley-web',
@@ -137,6 +139,16 @@ const Mywork = () => {
       title: 'Jagruk Janta-New',
       image: jagrukjantaImage, // Use imported image
       url: 'https://jagrukjanta.net/', // Correct as it was
+    },
+    {
+      title: 'Healix-Web',
+      image: healixImage, // Use imported image
+      url: 'https://healix-web.vercel.app/', // Correct as it was
+    },
+     {
+      title: 'OutFit-Q',
+      image: outfitImage, // Use imported image
+      url: '/', // Correct as it was
     },
   ];
 
