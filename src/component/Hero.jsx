@@ -2,6 +2,9 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 
+// Import your image directly - RECOMMENDED WAY FOR VITE
+import ProfilePic from '../assets/ashwani.jpeg'; // Ensure this path is correct
+
 // Background Animation
 const moveBackground = keyframes`
   0% { background-position: 0% 50%; }
@@ -10,13 +13,13 @@ const moveBackground = keyframes`
 `;
 
 const HeroContainer = styled.section`
-  height: auto;
+  min-height: 100vh; /* Use min-height for full viewport height, allowing content to expand if needed */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem 2rem;
-  text-align: left;
-  background: linear-gradient(45deg,rgb(181, 174, 188),rgb(3, 0, 5),rgb(172, 173, 176));
+  padding: 2rem 1rem; /* Reduced horizontal padding for smaller screens by default */
+  text-align: center; /* Default text-align for mobile-first approach */
+  background: linear-gradient(45deg, rgb(181, 174, 188), rgb(3, 0, 5), rgb(172, 173, 176));
   background-size: 300% 300%;
   animation: ${moveBackground} 10s infinite linear;
   position: relative;
@@ -24,8 +27,8 @@ const HeroContainer = styled.section`
   margin-bottom: 0;
 
   @media (min-width: 768px) {
-    height: 100vh;
-    padding: 4rem 4rem;
+    padding: 4rem; /* More padding for tablets and desktops */
+    text-align: left; /* Align text left on larger screens */
   }
 `;
 
@@ -36,76 +39,82 @@ const fadeInUp = keyframes`
 
 const ContentWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column; /* Default to column for mobile-first */
+  align-items: center; /* Center items when stacked vertically */
   max-width: 1200px;
   width: 100%;
   animation: ${fadeInUp} 1s ease-in-out;
+  gap: 2rem; /* Spacing between image and text content */
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
+  @media (min-width: 768px) {
+    flex-direction: row; /* Row layout for tablets and desktops */
+    justify-content: space-between; /* Space out image and text content */
+    align-items: center; /* Align items to center of the row */
   }
 `;
 
 const TextContent = styled.div`
   flex: 1;
-  padding-right: 1rem;
+  order: 2; /* Text content after image on mobile by default */
   animation: ${fadeInUp} 1.2s ease-in-out;
-  text-align: center;
+  text-align: center; /* Ensure all text is centered on mobile */
+  padding: 0 1rem; /* Add some horizontal padding to prevent text from touching edges */
 
-  @media (max-width: 768px) {
-    padding-right: 0;
-    margin-bottom: 2rem;
+  @media (min-width: 768px) {
+    order: unset; /* Reset order for desktop */
+    padding-right: 2rem; /* Space between text and image on desktop */
+    text-align: left; /* Align text left on larger screens */
   }
 `;
 
 const ImageContent = styled.div`
   flex: 1;
+  order: 1; /* Image first on mobile by default */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -1rem;
+  padding: 1rem 0; /* Add some vertical padding */
 
-  @media (max-width: 768px) {
-    order: -1;
-    margin-bottom: 1rem;
+  @media (min-width: 768px) {
+    order: unset; /* Reset order for desktop */
+    padding-left: 2rem; /* Space between image and text on desktop */
+    margin-top: 0; /* Ensure no residual negative margins */
   }
 `;
 
 const ProfileImage = styled.img`
-  width: 250px;
-  height: 250px;
+  width: clamp(180px, 60vw, 250px); /* Responsive width: min 180px, max 250px, scales with viewport width */
+  height: clamp(180px, 60vw, 250px); /* Maintain aspect ratio */
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Slightly stronger shadow */
   border: 5px solid white;
   transition: transform 0.4s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
   }
 `;
 
 const HeroHeading = styled.h1`
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 8vw, 4rem); /* Responsive font size for heading */
   margin-bottom: 0.5rem;
   color: white;
   font-weight: 700;
   line-height: 1.2;
   animation: ${fadeInUp} 1.5s ease-in-out;
-  text-align: center;
 `;
 
 const HeroDescription = styled.p`
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3.5vw, 1.2rem); /* Responsive font size for description */
   color: white;
   line-height: 1.5;
   margin-bottom: 2rem;
   max-width: 500px;
   animation: ${fadeInUp} 1.8s ease-in-out;
-  text-align: center;
+  margin-left: auto; /* Centers the block itself */
+  margin-right: auto; /* Centers the block itself */
 `;
 
 const pulseEffect = keyframes`
@@ -116,6 +125,7 @@ const pulseEffect = keyframes`
 
 const ButtonContainer = styled.div`
   display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap if needed */
   gap: 1rem;
   margin-bottom: 2rem;
   justify-content: center;
@@ -129,7 +139,8 @@ const ActionButton = styled.a`
   cursor: pointer;
   font-weight: 600;
   text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap; /* Prevent button text from wrapping */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   animation: ${pulseEffect} 2s infinite;
 
   &:hover {
@@ -137,12 +148,17 @@ const ActionButton = styled.a`
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem 1.8rem; /* Slightly smaller button for mobile */
+    font-size: 0.95rem;
+  }
 `;
 
 const SocialIcons = styled.div`
   display: flex;
   gap: 1.5rem;
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 6vw, 2.5rem); /* Responsive icon size */
   color: white;
   justify-content: center;
 `;
@@ -159,11 +175,14 @@ const SocialLink = styled.a`
 
 const Hero = () => {
   return (
-    <HeroContainer id="home" >
+    <HeroContainer id="home">
       <ContentWrapper>
+        {/* Image content */}
         <ImageContent>
-          <ProfileImage src="src/assets/Ashwani.jpeg" alt="Ashwani Bhardwaj" />
+          {/* Using the imported image variable */}
+          <ProfileImage src={ProfilePic} alt="Ashwani Bhardwaj - Frontend Developer and Web Designer" />
         </ImageContent>
+        {/* Text content */}
         <TextContent>
           <HeroHeading>Hi There, I'm Ashwani Bhardwaj</HeroHeading>
           <HeroDescription>I Am Into Frontend Development and Web Design</HeroDescription>
@@ -171,9 +190,9 @@ const Hero = () => {
             <ActionButton href="#about">About Me</ActionButton>
           </ButtonContainer>
           <SocialIcons>
-            <SocialLink href="https://www.linkedin.com/in/ashwani-bhardwajj" target="_blank"><FaLinkedin /></SocialLink>
-            <SocialLink href="https://github.com/ashwanicodee" target="_blank"><FaGithub /></SocialLink>
-            <SocialLink href="https://www.instagram.com/__xx_dude_xx__/" target="_blank"><FaInstagram /></SocialLink>
+            <SocialLink href="https://www.linkedin.com/in/ashwani-bhardwajj" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile"><FaLinkedin /></SocialLink>
+            <SocialLink href="https://github.com/ashwanicodee" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile"><FaGithub /></SocialLink>
+            <SocialLink href="https://www.instagram.com/__xx_dude_xx__/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile"><FaInstagram /></SocialLink>
           </SocialIcons>
         </TextContent>
       </ContentWrapper>

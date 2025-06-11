@@ -9,7 +9,7 @@ const ContactContainer = styled.section`
   display: flex;
   flex-direction: column; /* Stack elements on mobile */
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 
   @media (min-width: 768px) {
     /* Styles for larger screens */
